@@ -1,0 +1,38 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin: 0;
+  padding: 1px;
+  width: calc(100% - 2px);
+  height: 539px;
+}
+header, footer {
+  height: 10%;
+  width: 100%;
+  text-shadow: 1px 1px #507DBC;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#tabels, #query {
+  height: 80%;
+  display: block;
+}
+header {
+  color: #FFFFFF;
+  background-color: #04080F;
+}
+footer {
+  color: #04080F;
+  background-color: #BBD1EA;
+}
+#tabels {
+  width: 20%;
+  background-color: #507DBC;
+  float: left;
+}
+#query {
+  width: 80%;
+  background-color: #A1C6EA;
+  float: right;
+}

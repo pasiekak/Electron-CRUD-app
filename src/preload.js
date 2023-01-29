@@ -5,7 +5,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 
 const API = {
-    sendTables: () => ipcRenderer.invoke("tables")
+    sendTables: () => ipcRenderer.invoke('tables'),
+    sendTable: (msg) => ipcRenderer.invoke('table', msg),
 }
 
 contextBridge.exposeInMainWorld('api', API);

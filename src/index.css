@@ -9,12 +9,11 @@ header, footer {
   height: 10%;
   width: 100%;
   text-shadow: 1px 1px #507DBC;
-
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#tabels, #query {
+#tabels, #queryResult {
   height: 80%;
   display: block;
 }
@@ -31,29 +30,63 @@ footer {
   background-color: #507DBC;
   float: left;
 }
-#query {
+#queryResult {
   width: 80%;
   background-color: #A1C6EA;
   float: right;
 }
-.wrapper div {
+
+/* Table names */
+.wrapperTableNames div {
   overflow: hidden;
 }
-.wrapper ul {
+.wrapperTableNames ul {
   margin: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.wrapper li {
+.wrapperTableNames li {
   background: url(pictures/cells512.png) no-repeat right;
   list-style: none outside none;
   background-size: contain;
   flex-grow: 1;
   display: flex;
   align-items: center;
+  text-shadow: .5px .5px black;
 }
-.wrapper li:hover {
+.wrapperTableNames li:hover {
   background-color: #A1C6EA;
 }
-/* Centering tables list */
+
+/* Table values */
+.wrapperTableValues {
+  width: 500px;
+  height: 110px;
+  overflow: auto;
+  text-align:justify;
+}
+.wrapperTableValues th,td {
+  text-align: center;
+  padding: 8px;
+}
+.wrapperTableValues th {
+  color: #A1C6EA;
+  background: #507DBC;
+  text-shadow: 2px 2px black;
+}
+.wrapperTableValues tr:nth-child(even) {
+  background: #BBD1EA;
+}
+.wrapperTableValues table {
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: normal;
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+  background-color: white;
+}
+

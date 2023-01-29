@@ -46,11 +46,14 @@ footer {
   flex-direction: column;
 }
 .wrapper li {
-  background: url(pictures/cells32.png) no-repeat right;
+  background: url(pictures/cells512.png) no-repeat right;
   list-style: none outside none;
   background-size: contain;
   flex-grow: 1;
   display: flex;
   align-items: center;
+}
+.wrapper li:hover {
+  background-color: #A1C6EA;
 }
 /* Centering tables list */

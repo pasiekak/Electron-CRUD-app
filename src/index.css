@@ -3,23 +3,29 @@ body {
   margin: 0;
   padding: 1px;
   width: calc(100% - 2px);
-  height: 539px;
+  height: 739px;
 }
-header, footer {
-  height: 10%;
+header, footer, #interactive {
+  height: 6%;
   width: 100%;
   text-shadow: 1px 1px #507DBC;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+#interactive {
+  height: 8%;
+  background-color: #507DBC;
+}
 #tabels, #queryResult {
   height: 80%;
   display: block;
 }
 header {
-  color: #FFFFFF;
-  background-color: #04080F;
+  color: #000000;
+  background: linear-gradient(-45deg, black,#507DBC, #A1C6EA, #BBD1EA, #A1C6EA, #507DBC, black);
+  animation: gradient 15s ease infinite;
+  background-size: 400% 400%;
 }
 footer {
   color: #04080F;
@@ -88,5 +94,16 @@ footer {
   max-width: 100%;
   white-space: nowrap;
   background-color: white;
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 

@@ -5,7 +5,7 @@ body {
   width: calc(100% - 2px);
   height: 739px;
 }
-header, footer, #interactive {
+header, footer, #interactive, #action, #searchMenu {
   height: 6%;
   width: 100%;
   text-shadow: 1px 1px #507DBC;
@@ -15,6 +15,35 @@ header, footer, #interactive {
 }
 #interactive {
   height: 8%;
+  background-color: #507DBC;
+}
+#interactive #searchMenu {
+  height: 100%;
+  width: 20%;
+  float: left;
+  background-color: #507DBC;
+}
+#rest {
+  display: flex;
+  align-items: center;
+}
+#action {
+  height: 80%;
+  width: 15%;
+  float: left;
+  background-color: #BBD1EA;
+  border-radius: 2rem;
+}
+#searchMenu, #action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#interactive #rest {
+  height: 100%;
+  width: 80%;
+  float: left;
   background-color: #507DBC;
 }
 #tabels, #queryResult {
@@ -76,6 +105,10 @@ footer {
   text-align: center;
   padding: 8px;
 }
+.wrapperTableValues caption {
+  background-color: #507DBC;
+  border-bottom: 2px black double;
+}
 .wrapperTableValues th {
   color: #A1C6EA;
   background: #507DBC;
@@ -95,6 +128,33 @@ footer {
   white-space: nowrap;
   background-color: white;
 }
+
+/* Button */
+button {
+  background-color: rgb(255, 255, 255);
+  margin-top: 5px;
+  border-radius: 0.2rem;
+  border: none;
+  width: 90%;
+  transition: all 0.3s ease;
+}
+button:hover {
+  color: #507DBC;
+  background-color: #BBD1EA;
+}
+
+/* Search input */
+#searchText {
+  padding: 0;
+  color: #333;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.2rem;
+  border: none;
+  width: 90%;
+  transition: all 0.3s;
+  text-align: center;
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -106,4 +166,6 @@ footer {
     background-position: 0% 50%;
   }
 }
+
+
 

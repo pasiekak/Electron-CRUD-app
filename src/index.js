@@ -27,7 +27,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -58,8 +58,12 @@ app.on('activate', () => {
 ipcMain.handle('tables', async (event, args) => {
   let tables = await dbMG.getTableNames();
   return tables;
-})
+});
 ipcMain.handle('table', async (event, args) => {
   let tableRows = await dbMG.getTableRows(args);
   return tableRows;
+});
+ipcMain.handle('search', async (event, args) => {
+  let searchResult = await dbMG.getSearchResult(args);
+  return searchResult;
 })

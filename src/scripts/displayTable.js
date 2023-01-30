@@ -3,9 +3,12 @@ async function displayTable () {
         divTabels.forEach(li => {
             li.addEventListener('click',() => {
                 const divQueryResult = document.querySelector('#queryResult');
-                divQueryResult.innerHTML = null;
                 const tableRows = window.api.sendTable(li.innerText);
                 let table = document.createElement('table');
+                let caption = document.createElement('caption');
+                let captionText = document.createTextNode(li.innerText);
+                caption.appendChild(captionText);
+                table.appendChild(caption);
                 tableRows.then((rowsAndColumns) => {
                     let columns = rowsAndColumns.metaData;
                     let rows = rowsAndColumns.rows;
@@ -13,10 +16,12 @@ async function displayTable () {
                     columns.forEach(val => {
                         let th = document.createElement('th');
                         let thVal = document.createTextNode(val.name);
-                        th.appendChild(thVal)
-                        tr.appendChild(th)
-                        table.appendChild(tr)
+                        th.appendChild(thVal);
+                        tr.appendChild(th);
+                        table.appendChild(tr);
                     });
+                    let tbody = document.createElement('tbody');
+                    table.appendChild(tbody)
                     rows.forEach(row => {
                         tr = document.createElement('tr');
                         row.forEach(val => {
@@ -24,13 +29,16 @@ async function displayTable () {
                             let tdVal = document.createTextNode(val);
                             td.appendChild(tdVal);
                             tr.appendChild(td);
+                            tbody.appendChild(tr);
                         })
-                        table.appendChild(tr);
+                        tbody.appendChild(tr);
                     });
+                    table.appendChild(tbody);
+                    divQueryResult.innerHTML = null;
                     divQueryResult.appendChild(table);
-                })
-            })
-        })
+                });
+            });
+        });
 
 }
 

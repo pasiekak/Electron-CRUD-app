@@ -5,7 +5,7 @@ body {
   width: calc(100% - 2px);
   height: 739px;
 }
-header, footer, #interactive, #action, #searchMenu {
+header, footer, #interactive, #options, #searchMenu, #optionInputs {
   height: 6%;
   width: 100%;
   text-shadow: 1px 1px #507DBC;
@@ -27,14 +27,20 @@ header, footer, #interactive, #action, #searchMenu {
   display: flex;
   align-items: center;
 }
-#action {
+#options {
   height: 80%;
   width: 15%;
   float: left;
   background-color: #BBD1EA;
   border-radius: 2rem;
 }
-#searchMenu, #action {
+#optionInputs {
+  height: 100%;
+  width: 85%;
+  float: left;
+  background-color: orange;
+}
+#searchMenu, #options, #optionInputs {
   display: flex;
   justify-content: center;
   align-items: center;

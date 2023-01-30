@@ -2,11 +2,17 @@ async function displayTable () {
         const divTabels = document.querySelectorAll('#tabels li');
         divTabels.forEach(li => {
             li.addEventListener('click',() => {
+                // clearing inputs for insert,delete etc.
+                document.querySelector('#optionInputs').innerHTML = null;
+                document.querySelector('#optionPick').selectedIndex = 0;
+
                 const divQueryResult = document.querySelector('#queryResult');
                 const tableRows = window.api.sendTable(li.innerText);
+
                 let table = document.createElement('table');
                 let caption = document.createElement('caption');
                 let captionText = document.createTextNode(li.innerText);
+
                 caption.appendChild(captionText);
                 table.appendChild(caption);
                 tableRows.then((rowsAndColumns) => {
@@ -39,7 +45,6 @@ async function displayTable () {
                 });
             });
         });
-
 }
 
 export {displayTable};

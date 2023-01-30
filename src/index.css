@@ -35,10 +35,11 @@ header, footer, #interactive, #options, #searchMenu, #optionInputs {
   border-radius: 2rem;
 }
 #optionInputs {
+  overflow: auto;
   height: 100%;
   width: 85%;
   float: left;
-  background-color: orange;
+  background-color: #507DBC;
 }
 #searchMenu, #options, #optionInputs {
   display: flex;
@@ -136,7 +137,7 @@ footer {
 }
 
 /* Button */
-button {
+.btnWrapper {
   background-color: rgb(255, 255, 255);
   margin-top: 5px;
   border-radius: 0.2rem;
@@ -144,13 +145,27 @@ button {
   width: 90%;
   transition: all 0.3s ease;
 }
-button:hover {
+.btnWrapper:hover {
   color: #507DBC;
   background-color: #BBD1EA;
 }
+/* Insert Inputs */
+#optionInputs form {
+  float: left;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#optionInputs button {
+  float: left;
+}
+#optionInputs label, #optionInputs input {
+  margin-right: 10px;
+}
 
 /* Search input */
-#searchText {
+.textWrapper {
   padding: 0;
   color: #333;
   background-color: rgb(255, 255, 255);

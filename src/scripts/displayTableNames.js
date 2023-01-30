@@ -1,6 +1,5 @@
 async function displayTableNames (tablesPromise) {
     const divTable = document.querySelector('#tabels');
-
     let rows = tablesPromise.rows;
     let ul = document.createElement('ul');
     rows.forEach(row => {

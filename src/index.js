@@ -55,7 +55,7 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle('tables', async (event, args) => {
+ipcMain.handle('tableNames', async (event, args) => {
   let tables = await dbMG.getTableNames();
   return tables;
 });
@@ -64,6 +64,10 @@ ipcMain.handle('table', async (event, args) => {
   return tableRows;
 });
 ipcMain.handle('search', async (event, args) => {
-  let searchResult = await dbMG.getSearchResult(args);
+  let searchResult = dbMG.getSearchResult(args);
   return searchResult;
+})
+ipcMain.handle('tableColumns', async (event, args) => {
+  let tableColumns = dbMG.getTableColumns(args);
+  return tableColumns;
 })

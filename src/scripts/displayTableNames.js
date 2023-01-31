@@ -1,6 +1,6 @@
-async function displayTableNames (tablesPromise) {
-    const divTable = document.querySelector('#tabels');
-    let rows = tablesPromise.rows;
+async function displayTableNames (tableNames) {
+    const divTable = document.querySelector('#tables');
+    let rows = tableNames;
     let ul = document.createElement('ul');
     rows.forEach(row => {
         let li = document.createElement('li')

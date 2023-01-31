@@ -53,7 +53,7 @@ header, footer, #interactive, #options, #searchMenu, #optionInputs {
   float: left;
   background-color: #507DBC;
 }
-#tabels, #queryResult {
+#tables, #queryResult {
   height: 80%;
   display: block;
 }
@@ -67,7 +67,7 @@ footer {
   color: #04080F;
   background-color: #BBD1EA;
 }
-#tabels {
+#tables {
   width: 20%;
   background-color: #507DBC;
   float: left;

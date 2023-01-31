@@ -1,39 +1,46 @@
+import {liClicked} from "./liClicked.js";
+import {displayTable} from "./displayTable.js";
+
 async function searchForWord() {
-    const searchButton = document.querySelector('#searchButton');
-    searchButton.addEventListener('click',function () {
-        const divQueryTableBody = document.querySelector('#queryResult tbody');
-        const searchText = document.querySelector('#searchText').value;
-        let tableName
-        try { tableName = document.querySelector('.wrapperTableValues caption').innerText; } catch (err) { tableName = '' }
-        const tableColumnsHTML = document.querySelectorAll('.wrapperTableValues th');
+    let searchButton = document.querySelector('#searchButton');
+    searchButton.addEventListener('click',() => {
+        let tableName;
+        try {
+            tableName = document.querySelector('#queryResult caption').innerText
+        } catch (err) { tableName = '' }
+        let searchText = document.querySelector('#searchText').value;
         let searchResult = Array();
-        if (tableName !== '' && searchText !== '') {
-            tableColumnsHTML.forEach(column => {
-                let tableColumn = column.innerText;
-                searchResult.push(window.api.sendSearchResult({searchText, tableName, tableColumn}));
-            });
-            divQueryTableBody.innerHTML = null;
-            let newTableBody = document.createElement('tbody');
-            searchResult.forEach(promise => {
-                promise.then(rowsAndColumns => {
-                    let rows = rowsAndColumns.rows;
-                    if(rows.length !== 0) {
-                        rows.forEach(row => {
-                            let tr = document.createElement('tr');
-                            row.forEach(val => {
-                                let td = document.createElement('td');
-                                let tdVal = document.createTextNode(val);
-                                td.appendChild(tdVal);
-                                tr.appendChild(td);
-                                newTableBody.appendChild(tr);
-                            })
+        (async () => {
+            // When button is clicked Table must be selected and search text must be written
+            if (tableName !== '' && searchText !== '') {
+                // Without await it will return promise;
+                let tableColumns = await window.api.sendTableColumns(tableName);
+                tableColumns.forEach(tableColumn => {
+                    (async () => {
+                        let singleSearchResult = await window.api.sendSearchResult({searchText,tableName,tableColumn})
+                        singleSearchResult.forEach(row => {
+                            searchResult.push(row);
+                            console.log('PUSH AT: ',Date.now()/1000)
                         })
-                        console.log(newTableBody)
-                        divQueryTableBody.replaceWith(newTableBody);
-                    }
+                    })()
                 })
-            })
-        }
-    })
+                let finalResult = deleteDuplicatesThenDisplay(searchResult);
+                await display(tableName, tableColumns, finalResult);
+            }
+        })()
+    });
 }
 export { searchForWord };
+
+function deleteDuplicatesThenDisplay(searchResult) {
+    let finalResult;
+    setTimeout(() => {
+        finalResult = [...new Set(searchResult.map(JSON.stringify))].map(JSON.parse);
+        },2500)
+    return finalResult
+}
+async function display(tableName,tableColumns,finalResult) {
+    setTimeout(function () {
+        displayTable({tableName, tableColumns, finalResult})
+    },2750)
+}

@@ -1,4 +1,3 @@
-import {liClicked} from "./liClicked.js";
 import {displayTable} from "./displayTable.js";
 
 function searchForWord() {
@@ -28,10 +27,13 @@ async function loadTableColumns(tableName) {
     return tableColumns;
 }
 async function loadSearchResult(tableName, tableColumns, searchText) {
+    const selectSearchColumn = document.querySelector('#selectSearchInput');
+    let columnChosen = selectSearchColumn[selectSearchColumn.selectedIndex].value
     let searchResult = Array();
+
+    if (columnChosen !== 'nothing') tableColumns = [columnChosen];
     for (const tableColumn of tableColumns) {
         let columnSearchResult = await window.api.sendSearchResult({searchText,tableName,tableColumn});
-        console.log(columnSearchResult);
         for (let match of columnSearchResult) {
             searchResult.push(match);
         }
@@ -47,4 +49,7 @@ async function load(tableName, searchText) {
             displayTable(tableName,tableColumns, finalResult);
         }
     }
+}
+async function getSelectedColumn() {
+    const selectSearchColumn = document.querySelector('#selectSearchInput');
 }

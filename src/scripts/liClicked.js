@@ -1,8 +1,8 @@
 import {displayTable} from "./displayTable.js";
 
 async function liClicked () {
-        const divTabels = document.querySelectorAll('#tables li');
-        divTabels.forEach(li => {
+        const divTables = document.querySelectorAll('#tables li');
+        divTables.forEach(li => {
             li.addEventListener('click',() => {
                 const tableName = li.innerText
                 // clearing inputs for insert,delete etc.
@@ -10,14 +10,25 @@ async function liClicked () {
                 document.querySelector('#optionPick').selectedIndex = 0;
                 (async () => {
                     const result = await window.api.sendTable(tableName);
-                    setTimeout(function () {
-                        let rows = result.rows;
-                        let columns = result.metaData.map(obj => obj.name);
-                        displayTable(tableName, columns, rows);
-                    },50);
+                    let tableRows = result.rows;
+                    let tableColumns = result.metaData.map(obj => obj.name);
+                    addSearchOptions(tableColumns)
+                    displayTable(tableName, tableColumns, tableRows);
                 })()
             });
         });
 }
 
 export {liClicked};
+
+function addSearchOptions(tableColumns) {
+    const selectSearchColumn = document.querySelector('#selectSearchInput');
+    selectSearchColumn.innerHTML = '<option value="nothing" selected>Opcjonalny wybór kolumny</option>';
+    for (let column of tableColumns) {
+        let option = document.createElement('option');
+        option.setAttribute('value',column);
+        let optionTextNode = document.createTextNode(column);
+        option.appendChild(optionTextNode);
+        selectSearchColumn.appendChild(option);
+    }
+}

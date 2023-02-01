@@ -22,7 +22,6 @@ async function getTableRows (tableName) {
         connection = await oracledb.getConnection(loginData)
         let result = await connection.execute(`SELECT * FROM ${tableName}`);
         connection.close();
-        console.log(result);
         return result;
     } catch (err) {
         console.log(err)
@@ -53,7 +52,6 @@ async function getTableColumns (tableName) {
         let query = `SELECT * FROM ${tableName}`;
         let result = await connection.execute(query);
         connection.close();
-        console.log(result,'  ',typeof(result));
         let finalResult = result.metaData.map(ob => ob.name);
         return finalResult;
 

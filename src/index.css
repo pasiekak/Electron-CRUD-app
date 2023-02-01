@@ -139,7 +139,6 @@ footer {
 /* Button */
 .btnWrapper {
   background-color: rgb(255, 255, 255);
-  margin-top: 5px;
   border-radius: 0.2rem;
   border: none;
   width: 90%;
@@ -164,8 +163,8 @@ footer {
   margin-right: 10px;
 }
 
-/* Search input */
-.textWrapper {
+/* Search input and column Select */
+.textWrapper, #selectSearchInput {
   padding: 0;
   color: #333;
   background-color: rgb(255, 255, 255);
@@ -174,6 +173,10 @@ footer {
   width: 90%;
   transition: all 0.3s;
   text-align: center;
+}
+#selectSearchInput {
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 @keyframes gradient {

@@ -1,4 +1,4 @@
-function displayTable(tableName, columns, rows) {
+function displayTable(tableName, tableColumns, tableRows) {
     const queryResult = document.querySelector('#queryResult');
     queryResult.innerHTML = null;
     let table = document.createElement('table');
@@ -10,14 +10,14 @@ function displayTable(tableName, columns, rows) {
     caption.appendChild(captionText);
     table.appendChild(caption);
 
-    columns.forEach(col => {
+    tableColumns.forEach(col => {
         let th = document.createElement('th');
         let thText = document.createTextNode(col);
         th.appendChild(thText)
         tr.appendChild(th);
     })
     table.appendChild(tr);
-    rows.forEach(row => {
+    tableRows.forEach(row => {
         let tr = document.createElement('tr');
         row.forEach(r => {
             let td = document.createElement('td');

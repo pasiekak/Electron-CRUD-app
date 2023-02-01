@@ -10,7 +10,7 @@ async function work() {
     if(!data.isDefault) {
         await displayTableNames(data);
         await liClicked();
-        await searchForWord();
+        searchForWord();
         await optionEvents();
     }
 }

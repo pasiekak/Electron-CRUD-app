@@ -13,7 +13,7 @@ async function liClicked () {
                     setTimeout(function () {
                         let rows = result.rows;
                         let columns = result.metaData.map(obj => obj.name);
-                        displayTable({tableName, columns, rows});
+                        displayTable(tableName, columns, rows);
                     },50);
                 })()
             });

@@ -1,7 +1,6 @@
-async function displayTable({tableName, columns, rows}) {
+function displayTable(tableName, columns, rows) {
     const queryResult = document.querySelector('#queryResult');
     queryResult.innerHTML = null;
-
     let table = document.createElement('table');
     let caption = document.createElement('caption');
     let tr = document.createElement('tr');
@@ -18,7 +17,6 @@ async function displayTable({tableName, columns, rows}) {
         tr.appendChild(th);
     })
     table.appendChild(tr);
-    console.log('displayTable.js ',rows,' typ: ',typeof(rows),'Czas: ',Date.now()/1000,'\nCols: ',columns,'\nTableName: ',tableName);
     rows.forEach(row => {
         let tr = document.createElement('tr');
         row.forEach(r => {

@@ -20,8 +20,9 @@ async function getTableRows (tableName) {
     let connection;
     try {
         connection = await oracledb.getConnection(loginData)
-        result = await connection.execute(`SELECT * FROM ${tableName}`);
+        let result = await connection.execute(`SELECT * FROM ${tableName}`);
         connection.close();
+        console.log(result);
         return result;
     } catch (err) {
         console.log(err)
@@ -35,7 +36,7 @@ async function getSearchResult ({searchText, tableName, tableColumn}) {
         if (tableColumn.search('HIRE_DATE') == -1) {
             query = `SELECT * FROM ${tableName} WHERE ${tableColumn} LIKE '%${searchText}%'`;
         } else {
-            query = `SELECT * FROM ${tableName} WHERE CAST(${tableColumn} AS VARCHAR2(30)) LIKE '%${searchText}%'`
+            query = `SELECT * FROM ${tableName} WHERE TO_CHAR(${tableColumn},'yyyy/mm/dd') LIKE '%${searchText}%'`
         }
         result = await connection.execute(query);
         connection.close();

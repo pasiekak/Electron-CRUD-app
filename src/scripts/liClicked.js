@@ -4,7 +4,6 @@ async function liClicked () {
         const divTables = document.querySelectorAll('#tables li');
         divTables.forEach(li => {
             li.addEventListener('click',() => {
-                console.log(li.innerText)
                 const tableName = li.innerText;
                 // clearing inputs for insert,delete etc.
                 (async () => {

@@ -4,8 +4,7 @@ async function displayTableNames (tableNames) {
     let ul = document.createElement('ul');
     rows.forEach(row => {
         let li = document.createElement('li')
-        let childText = document.createTextNode(row)
-        li.appendChild(childText);
+        li.innerText = row
         ul.appendChild(li);
     })
     divTable.appendChild(ul);

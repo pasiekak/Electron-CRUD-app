@@ -11,31 +11,21 @@
     <header>
       <h1>Baza danych Oracle</h1>
     </header>
-    <div id="interactive">
-      <div id="searchMenu">
-        <input type="text" placeholder="Wpisz wyszukiwany tekst" id="searchText" class="textWrapper">
-        <select id="selectSearchInput">
-          <option value="nothing" selected>Opcjonalny wybór kolumny</option>
-        </select>
-        <button id="searchButton" class="btnWrapper"><span>Szukaj</span></button>
-      </div>
-      <div id="rest">
-        <div id="options">
-          <label for="optionPick">Wybierz komendę</label>
-          <select id="optionPick">
-            <option value="nothing" hidden>Nic</option>
-            <option value="INSERT">Insert</option>
-            <option value="UPDATE">Update</option>
-            <option value="DELETE">Delete</option>
+    <div id="middle">
+      <div id="interactive">
+        <div id="searchMenu">
+          <input type="text" placeholder="Wpisz wyszukiwany tekst" id="searchText" class="textWrapper">
+          <select id="selectSearchInput">
+            <option value="nothing" selected>Opcjonalny wybór kolumny</option>
           </select>
+          <button id="searchButton" class="btnWrapper"><span>Szukaj</span></button>
         </div>
-        <div id="optionInputs">
+        <div id="tables" class="wrapperTableNames"></div>
+      </div>
+      <div id="queryResult" class="wrapperTableValues">
 
-        </div>
       </div>
     </div>
-    <div id="tables" class="wrapperTableNames"></div>
-    <div id="queryResult" class="wrapperTableValues"></div>
     <footer>
       <p>Autorzy: Krzysztof Pasieka, Adam Falikowski</p>
     </footer>

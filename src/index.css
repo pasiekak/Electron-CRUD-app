@@ -5,79 +5,52 @@ body {
   width: calc(100% - 2px);
   height: 739px;
 }
-header, footer, #interactive, #options, #searchMenu, #optionInputs {
-  height: 6%;
-  width: 100%;
-  text-shadow: 1px 1px #507DBC;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#interactive {
-  height: 8%;
-  background-color: #507DBC;
-}
-#interactive #searchMenu {
-  height: 100%;
-  width: 20%;
-  float: left;
-  background-color: #507DBC;
-}
-#rest {
-  display: flex;
-  align-items: center;
-}
-#options {
-  height: 80%;
-  width: 15%;
-  float: left;
-  background-color: #BBD1EA;
-  border-radius: 2rem;
-}
-#optionInputs {
-  overflow: auto;
-  height: 100%;
-  width: 85%;
-  float: left;
-  background-color: #507DBC;
-}
-#searchMenu, #options, #optionInputs {
+/* Centering any content */
+#searchMenu, #options, #optionInputs, header, footer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-#interactive #rest {
-  height: 100%;
-  width: 80%;
-  float: left;
-  background-color: #507DBC;
-}
-#tables, #queryResult {
-  height: 80%;
-  display: block;
-}
+/* Positioning biggest divs */
 header {
+  height: 10%;
+  width: 100%;
   color: #000000;
   background: linear-gradient(-45deg, black,#507DBC, #A1C6EA, #BBD1EA, #A1C6EA, #507DBC, black);
   animation: gradient 15s ease infinite;
   background-size: 400% 400%;
 }
 footer {
+  height: 10%;
+  width: 100%;
   color: #04080F;
   background-color: #BBD1EA;
 }
-#tables {
+#middle {
+  height: 80%;
+  width: 100%;
+}
+/* Inside middle */
+#interactive {
+  height: 100%;
   width: 20%;
-  background-color: #507DBC;
   float: left;
+  background-color: #507DBC;
 }
 #queryResult {
+  height: 100%;
   width: 80%;
-  background-color: #A1C6EA;
   float: right;
+  background-color: #BBD1EA;
 }
-
+/* Style and positioning inside interactive div */
+#searchMenu {
+  height: 10%;
+}
+#tables {
+  height: 90%;
+}
 /* Table names */
 .wrapperTableNames div {
   overflow: hidden;

@@ -4,10 +4,9 @@ async function liClicked () {
         const divTables = document.querySelectorAll('#tables li');
         divTables.forEach(li => {
             li.addEventListener('click',() => {
-                const tableName = li.innerText
+                console.log(li.innerText)
+                const tableName = li.innerText;
                 // clearing inputs for insert,delete etc.
-                document.querySelector('#optionInputs').innerHTML = null;
-                document.querySelector('#optionPick').selectedIndex = 0;
                 (async () => {
                     const result = await window.api.sendTable(tableName);
                     let tableRows = result.rows;

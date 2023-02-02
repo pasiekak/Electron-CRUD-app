@@ -1,4 +1,4 @@
-import {update} from "./update.js";
+import {updateEvent} from "./updateEvent.js";
 
 function displayTable(tableName, tableColumns, tableRows) {
     const queryResult = document.querySelector('#queryResult');
@@ -25,23 +25,24 @@ function makeTableFromArray(tableArray, tableName) {
 
     let trhead = document.createElement('tr');
     for (let i = 0; i < tableArray[0].length; i++) {
+        let tableColumn = tableArray[0][i];
         let th = document.createElement('th');
-        th.innerText = tableArray[0][i];
+        let thText = document.createTextNode(tableColumn)
+        th.appendChild(thText);
         trhead.appendChild(th);
     }
     thead.appendChild(trhead);
     for (let i = 1; i < tableArray.length; i++) {
         let trbody = document.createElement('tr');
-        for (let j = 0; j < tableArray[j].length; j++) {
+        for (let j = 0; j < tableArray[0].length; j++) {
             let td = document.createElement('td');
+            let span = document.createElement('span')
             let value = tableArray[i][j];
-            td.innerText = value;
-            td.addEventListener('click',() => {
-                let input = document.createElement('input');
-                input.setAttribute('type','text');
-                input.setAttribute('class','updateTextInput');
-                td.appendChild(input);
-            });
+            let tdText = document.createTextNode(value);
+            let tableColumn = tableArray[0][j];
+            span.appendChild(tdText)
+            td.appendChild(span)
+            updateEvent(tableName, tableColumn, td, span);
             trbody.appendChild(td);
         }
         tbody.appendChild(trbody)

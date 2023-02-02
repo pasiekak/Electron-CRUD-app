@@ -89,6 +89,9 @@ footer {
   text-align: center;
   padding: 8px;
 }
+.wrapperTableValues td:hover {
+  background-color: #507DBC;
+}
 .wrapperTableValues caption {
   background-color: #507DBC;
   border-bottom: 2px black double;

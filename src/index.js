@@ -8,6 +8,7 @@ const dbMG = require('./database/dbMG');
 require('electron-reload')(projectPath, {
   app: require(path.join(__dirname,'..','node_modules/electron'))
 });
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -70,4 +71,12 @@ ipcMain.handle('search', async (event, args) => {
 ipcMain.handle('tableColumns', async (event, args) => {
   let tableColumns = dbMG.getTableColumns(args);
   return tableColumns;
+})
+ipcMain.handle('update', async (event, args) => {
+  let message = dbMG.updateValue(args);
+  return message;
+})
+ipcMain.handle('columnTypes', async (event, args) => {
+  let columnType = dbMG.sendColumnType(args);
+  return columnType;
 })

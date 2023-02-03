@@ -54,7 +54,7 @@ footer {
 #tables {
   height: 90%;
   background-color: #507DBC;
-  border-radius: 0 0 1rem;
+  border-radius: 0 0 10px;
 
 }
 /* Table names ul li*/
@@ -64,7 +64,7 @@ footer {
   display: flex;
   flex-direction: column;
   padding-left: 0;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 .wrapperTableNames li {
   background: url(pictures/cells512.png) right no-repeat;
@@ -128,22 +128,9 @@ footer {
   color: #507DBC;
   background-color: #BBD1EA;
 }
+/* Delete button */
 
 /* Search input and column Select */
-.textWrapper, #selectSearchInput {
-  padding: 0;
-  color: #333;
-  background-color: rgb(255, 255, 255);
-  border-radius: 0.2rem;
-  border: none;
-  width: 90%;
-  transition: all 0.3s;
-  text-align: center;
-}
-#selectSearchInput {
-  margin-top: 1px;
-  margin-bottom: 1px;
-}
 
 @keyframes gradient {
   0% {

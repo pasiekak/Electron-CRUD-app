@@ -7,9 +7,9 @@ const API = {
     sendTableColumns: (tableName) => ipcRenderer.invoke('tableColumns', tableName),
     sendTableNames: () => ipcRenderer.invoke('tableNames'),
     sendTable: (msg) => ipcRenderer.invoke('table', msg),
+    sendColumnType: ({tableName, columnName}) => ipcRenderer.invoke('columnType', {tableName, columnName}),
     sendSearchResult: ({searchText, tableName, tableColumn}) => ipcRenderer.invoke('search', {searchText, tableName, tableColumn}),
-    sendColumnTypes: ({tableName, tableColumn}) => ipcRenderer.invoke('columnTypes', {tableName, tableColumn}),
-    updateValue: ({tableName, tableColumn, columnType, oldValue, newValue}) => ipcRenderer.invoke('update',{tableName, tableColumn, columnType, oldValue, newValue}),
+    updateValue: ({tableName, columnName, idColumnName, idValue, oldValue, newValue}) => ipcRenderer.invoke('update',{tableName, columnName, idColumnName, idValue, oldValue, newValue}),
 }
 
 contextBridge.exposeInMainWorld('api', API);

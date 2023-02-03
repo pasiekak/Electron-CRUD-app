@@ -76,7 +76,7 @@ ipcMain.handle('update', async (event, args) => {
   let message = dbMG.updateValue(args);
   return message;
 })
-ipcMain.handle('columnTypes', async (event, args) => {
+ipcMain.handle('columnType', async (event, args) => {
   let columnType = dbMG.sendColumnType(args);
   return columnType;
 })

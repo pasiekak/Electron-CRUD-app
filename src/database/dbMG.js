@@ -6,16 +6,18 @@ const loginData = {
 }
 async function getTableNames () {
     let connection;
-    let xd;
+    let tables;
     try {
+        console.log('start getTableNames')
         connection = await oracledb.getConnection(loginData);
         let result = await connection.execute(`SELECT table_name FROM user_tables`);
-        xd = result.rows;
+        tables = result.rows;
     } catch (err) {
-        console.log(err, '\n\nError in getTableNames(), dbMG.js');
+        return err;
     } finally {
         await connection.close();
-        return xd;
+        console.log('end getTableNames')
+        return tables;
 
     }
 }
@@ -23,13 +25,15 @@ async function getTableNames () {
 async function getTableRows (tableName) {
     let connection, result;
     try {
+        console.log('start getTableRows')
         connection = await oracledb.getConnection(loginData);
         result = await connection.execute(`SELECT * FROM ${tableName}`);
     } catch (err) {
-        console.log(err, '\n\nError in getTableRows(), dbMG.js');
+        return err;
     } finally {
         if (connection) {
             await connection.close();
+            console.log('end getTableRows')
             return result;
         }
     }
@@ -38,6 +42,7 @@ async function getSearchResult ({searchText, tableName, tableColumn}) {
     let connection;
     let result;
     try {
+        console.log('start getSearchResult')
         connection = await oracledb.getConnection(loginData)
         let query;
         if (tableColumn.search('HIRE_DATE') === -1) {
@@ -47,10 +52,11 @@ async function getSearchResult ({searchText, tableName, tableColumn}) {
         }
         result = await connection.execute(query);
     } catch (err) {
-        console.log(err, '\n\nError in getSearchResult(), dbMG.js');
+        return err
     } finally {
         if (connection) {
             await connection.close();
+            console.log('end getSearchResult')
             return result.rows;
         }
     }
@@ -60,60 +66,75 @@ async function getTableColumns (tableName) {
     let connection;
     let finalResult;
     try {
+        console.log('start getTableColumns')
         connection = await oracledb.getConnection(loginData);
         let query = `SELECT * FROM ${tableName}`;
         let result = await connection.execute(query);
         finalResult = result.metaData.map(ob => ob.name);
     } catch (err) {
-        console.log(err, '\n\nError in getTableColumns(), dbMG.js');
+        return err
     } finally {
         if (connection) {
             await connection.close();
+            console.log('end getTableColumns')
             return finalResult;
         }
     }
 }
 
-async function sendColumnType({tableName, tableColumn}) {
+async function sendColumnType({tableName, columnName}) {
     let connection, result;
     try {
+        console.log('start sendColumnType')
         connection = await oracledb.getConnection(loginData)
-        let sql = `SELECT column_name, data_type, data_length FROM user_tab_columns WHERE table_name = '${tableName}' AND column_name = '${tableColumn}'`;
+        let sql = `SELECT column_name, data_type, data_length FROM user_tab_columns WHERE table_name = '${tableName}' AND column_name = '${columnName}'`;
         result = await connection.execute(sql)
     } catch (err) {
-        console.log(err, '\n\nError in sendColumnType(), dbMG.js');
+        return err
     } finally {
         if (connection) {
             await connection.close();
+            console.log('end sendColumnType')
             return result.rows[0][1];
         }
     }
 }
 
-async function updateValue ({tableName, tableColumn, columnType, oldValue, newValue}) {
+async function updateValue ({tableName, columnName, idColumnName, idValue, oldValue, newValue}) {
     oracledb.autoCommit = true;
     let connection, result;
     try {
+        console.log('start updateValue')
         connection = await oracledb.getConnection(loginData);
         let sql;
-        if (columnType === 'NUMBER') {
-            sql = `UPDATE ${tableName} SET ${tableColumn} = ${newValue} WHERE ${tableColumn} = ${oldValue}`;
-        } else if (columnType === 'VARCHAR2') {
-            sql = `UPDATE ${tableName} SET ${tableColumn} = '${newValue}' WHERE ${tableColumn} LIKE '${oldValue}'`;
-        } else if (columnType === 'DATE') {
-            sql = `UPDATE ${tableName} SET ${tableColumn} = TO_DATE('${newValue}', 'DD-MON-RR') WHERE ${tableColumn} LIKE '${oldValue}'`
+        let columnType = await sendColumnType({tableName, columnName});
+        let idColumnType = await sendColumnType({tableName, columnName: idColumnName});
+
+        if (columnType === 'NUMBER') { newValue = Number(newValue) }
+        else if (columnType === 'DATE') {
+            let parts = newValue.split('-');
+            newValue = new Date(parts[0], parts[1], parts[2]);
         }
-        if (oldValue === 'null') {
+        sql = `UPDATE ${tableName} SET ${columnName} = :newVal WHERE ${idColumnName} LIKE :idVal`;
+
+        if (idColumnType === 'NUMBER') {
+            idValue = Number(idValue)
             sql = sql.slice(0, sql.lastIndexOf(" WHERE "));
-            sql += ` WHERE ${tableColumn} IS NULL`;
+            sql += ` WHERE ${idColumnName} = :idVal`;
+        };
+        let binds = {
+            newVal : newValue,
+            idVal : idValue,
         }
-        console.log(sql);
-        result = await connection.execute(sql);
+        result = await connection.execute(sql, binds);
     } catch (err) {
-        console.log(err, '\n\nError in updateValue(), dbMG.js');
+        result = err;
+        return result;
     } finally {
         if (connection) {
             await connection.close()
+            oracledb.autoCommit = false;
+            console.log('end updateValue')
             return result;
         }
     }

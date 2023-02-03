@@ -14,7 +14,14 @@ export {displayTable};
 function makeTableAsArray(tableColumns, tableRows) {
     let tableArray = Array();
     tableArray.push(tableColumns);
-    tableRows.forEach(row => tableArray.push(row));
+    tableRows.forEach(row => {
+        tableArray.push(row)
+        for (let i = 0; i < row.length; i++) {
+            if (row[i] instanceof Date) {
+                row[i] = `${row[i].getDate()}.${row[i].getMonth()}.${row[i].getFullYear()}`;
+            }
+        }
+    });
     return tableArray;
 }
 function makeTableFromArray(tableArray, tableName) {
@@ -39,10 +46,8 @@ function makeTableFromArray(tableArray, tableName) {
             let span = document.createElement('span')
             let value = tableArray[i][j];
             let tdText = document.createTextNode(value);
-            let tableColumn = tableArray[0][j];
             span.appendChild(tdText)
             td.appendChild(span)
-            updateEvent(tableName, tableColumn, td, span);
             trbody.appendChild(td);
         }
         tbody.appendChild(trbody)
@@ -51,5 +56,6 @@ function makeTableFromArray(tableArray, tableName) {
     table.appendChild(caption);
     table.appendChild(thead);
     table.appendChild(tbody);
+    updateEvent(table)
     return table;
 }

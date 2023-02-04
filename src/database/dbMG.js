@@ -1,15 +1,31 @@
 const oracledb = require("oracledb");
 const moment = require("moment");
+const path = require('path');
 const loginData = {
     user : "ziibd37",
     password : "haslo2022",
     connectString : "155.158.112.45:1521/oltpstud",
+};
+async function setEnv () {
+    let p;
+    try {
+        const rootDirectory = process.cwd();
+        p = path.join(rootDirectory, 'oracle', 'instantclient_21_8');
+        await oracledb.initOracleClient({libDir: p});
+        return p;
+    } catch (err) {
+        console.error('Whoops!');
+        console.error(err);
+        //process.exit(1);
+        return {err, p}
+    }
 }
+
 async function getTableNames () {
     let connection;
     let tables;
     try {
-        console.log('start getTableNames')
+        console.log('start getTableNames');
         connection = await oracledb.getConnection(loginData);
         let result = await connection.execute(`SELECT table_name FROM user_tables`);
         tables = result.rows;
@@ -19,9 +35,8 @@ async function getTableNames () {
         if (connection) {
             await connection.close();
         }
-        console.log('end getTableNames')
+        console.log('end getTableNames');
         return tables;
-
     }
 }
 
@@ -226,6 +241,7 @@ async function deleteRow({tableName, idColumnName, idColumnValue}) {
     }
 }
 
+exports.setEnv = setEnv;
 exports.deleteRow = deleteRow;
 exports.getNullableColumns = getNullableColumns;
 exports.getColumnType = getColumnType;

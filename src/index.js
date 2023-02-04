@@ -1,13 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const oracledb = require("oracledb");
-const projectPath = path.join(__dirname,'..');
 const dbMG = require('./database/dbMG');
 
 // Live reload - ELECTRON
-require('electron-reload')(projectPath, {
-  app: require(path.join(__dirname,'..','node_modules/electron'))
-});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -90,5 +85,9 @@ ipcMain.handle('insert', async (event, args) => {
 })
 ipcMain.handle('delete', async (event, args) => {
   let message = await dbMG.deleteRow(args);
+  return message;
+})
+ipcMain.handle('env', async(event, args) => {
+  let message = await dbMG.setEnv();
   return message;
 })

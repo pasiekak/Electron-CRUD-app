@@ -16,13 +16,12 @@ function addDeleteButtons (table) {
                     idColumnName: table.querySelector('thead th').innerText,
                     idColumnValue: firstTD.querySelector('span').innerText,
                 }
-                let result = await window.api.deleteRow(deleteData);
+                let result = window.api.deleteRow(deleteData);
                 if (result) {
                     await resetTable(deleteData.tableName);
                 }
             }
         })
-
         firstTD.insertBefore(deleteButton, firstTD.firstChild)
     })
     return table;

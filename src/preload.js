@@ -13,6 +13,7 @@ const API = {
     deleteRow: ({tableName, idColumnName, idColumnValue}) => ipcRenderer.invoke('delete',{tableName, idColumnName, idColumnValue}),
     insertValues: ({tableName, values}) => ipcRenderer.invoke('insert', {tableName, values}),
     updateValue: ({tableName, columnName, idColumnName, idValue, oldValue, newValue}) => ipcRenderer.invoke('update',{tableName, columnName, idColumnName, idValue, oldValue, newValue}),
+    setEnv: () => ipcRenderer.invoke('env'),
 }
 
 contextBridge.exposeInMainWorld('api', API);

@@ -9,6 +9,8 @@ const API = {
     sendTable: (msg) => ipcRenderer.invoke('table', msg),
     sendColumnType: ({tableName, columnName}) => ipcRenderer.invoke('columnType', {tableName, columnName}),
     sendSearchResult: ({searchText, tableName, tableColumn}) => ipcRenderer.invoke('search', {searchText, tableName, tableColumn}),
+    sendNullableColumns: (tableName) => ipcRenderer.invoke('null',tableName),
+    insertValues: ({tableName, values}) => ipcRenderer.invoke('insert', {tableName, values}),
     updateValue: ({tableName, columnName, idColumnName, idValue, oldValue, newValue}) => ipcRenderer.invoke('update',{tableName, columnName, idColumnName, idValue, oldValue, newValue}),
 }
 

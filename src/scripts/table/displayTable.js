@@ -1,4 +1,5 @@
-import {updateEvent} from "./updateEvent.js";
+import {updateEvent} from "../update/updateEvent.js";
+import {addInsertInputs} from "../insert/addInsertInputs.js";
 
 function displayTable(tableName, tableColumns, tableRows) {
     const queryResult = document.querySelector('#queryResult');
@@ -29,9 +30,9 @@ function makeTableFromArray(tableArray, tableName) {
     let caption = document.createElement('caption');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
-
+    let numberOfColumns = tableArray[0].length;
     let trhead = document.createElement('tr');
-    for (let i = 0; i < tableArray[0].length; i++) {
+    for (let i = 0; i < numberOfColumns; i++) {
         let tableColumn = tableArray[0][i];
         let th = document.createElement('th');
         let thText = document.createTextNode(tableColumn)
@@ -41,7 +42,7 @@ function makeTableFromArray(tableArray, tableName) {
     thead.appendChild(trhead);
     for (let i = 1; i < tableArray.length; i++) {
         let trbody = document.createElement('tr');
-        for (let j = 0; j < tableArray[0].length; j++) {
+        for (let j = 0; j < numberOfColumns; j++) {
             let td = document.createElement('td');
             let span = document.createElement('span')
             let value = tableArray[i][j];
@@ -56,6 +57,7 @@ function makeTableFromArray(tableArray, tableName) {
     table.appendChild(caption);
     table.appendChild(thead);
     table.appendChild(tbody);
+    table = addInsertInputs(numberOfColumns, table);
     updateEvent(table)
     return table;
 }

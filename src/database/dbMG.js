@@ -1,4 +1,5 @@
 const oracledb = require("oracledb");
+const moment = require("moment");
 const loginData = {
     user : "ziibd37",
     password : "haslo2022",
@@ -15,7 +16,9 @@ async function getTableNames () {
     } catch (err) {
         return err;
     } finally {
-        await connection.close();
+        if (connection) {
+            await connection.close();
+        }
         console.log('end getTableNames')
         return tables;
 
@@ -81,8 +84,25 @@ async function getTableColumns (tableName) {
         }
     }
 }
+async function getNullableColumns(tableName) {
+    let connection, result;
+    try {
+        console.log('start getNullableColumns');
+        connection = await oracledb.getConnection(loginData);
+        let sql = `SELECT column_name, nullable FROM user_tab_columns WHERE table_name = '${tableName}'`
+        result = await connection.execute(sql);
+    } catch (err) {
+        return err;
+    } finally {
+        if (connection) {
+            await connection.close();
+            console.log('end getNullableColumns');
+            return result.rows;
+        }
+    }
+}
 
-async function sendColumnType({tableName, columnName}) {
+async function getColumnType({tableName, columnName}) {
     let connection, result;
     try {
         console.log('start sendColumnType')
@@ -107,8 +127,8 @@ async function updateValue ({tableName, columnName, idColumnName, idValue, oldVa
         console.log('start updateValue')
         connection = await oracledb.getConnection(loginData);
         let sql;
-        let columnType = await sendColumnType({tableName, columnName});
-        let idColumnType = await sendColumnType({tableName, columnName: idColumnName});
+        let columnType = await getColumnType({tableName, columnName});
+        let idColumnType = await getColumnType({tableName, columnName: idColumnName});
 
         if (columnType === 'NUMBER') { newValue = Number(newValue) }
         else if (columnType === 'DATE') {
@@ -140,9 +160,44 @@ async function updateValue ({tableName, columnName, idColumnName, idValue, oldVa
     }
 }
 
-exports.sendColumnType = sendColumnType;
-exports.updateValue = updateValue;
+async function insertValues({tableName, values}) {
+    let connection, result;
+    oracledb.autoCommit = true;
+    try {
+        console.log('start insertValues')
+        connection = await oracledb.getConnection(loginData);
+        let sql = `INSERT INTO ${tableName} VALUES (`;
+        values = values.map((value, index) => {
+            sql += `:${index},`;
+            if(moment(value, 'YYYY-MM-DD', true).isValid()) {
+                let parts = value.split('-');
+                value = new Date(parts[0], parts[1], parts[2]);
+            }
+            return value;
+        })
+        sql = sql.slice(0,sql.lastIndexOf(','));
+        sql += ')'
+        console.log(sql)
+        console.log(values)
+        result = await connection.execute(sql, values);
+    } catch (err) {
+        result = err;
+        return err
+    } finally {
+        if (connection) {
+            await connection.close();
+            oracledb.autoCommit = false;
+            console.log('end insertValues')
+            return result
+        }
+    }
+}
+
+exports.getNullableColumns = getNullableColumns;
+exports.getColumnType = getColumnType;
 exports.getTableColumns = getTableColumns;
 exports.getTableNames = getTableNames;
 exports.getTableRows = getTableRows;
 exports.getSearchResult = getSearchResult;
+exports.updateValue = updateValue;
+exports.insertValues = insertValues;

@@ -1,4 +1,4 @@
-import {displayTable} from "./displayTable.js";
+import {displayTable} from "../table/displayTable.js";
 
 function searchForWord() {
     let searchButton = document.querySelector('#searchButton');

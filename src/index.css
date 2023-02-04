@@ -72,7 +72,7 @@ footer {
   flex-grow: 1;
   display: flex;
   align-items: center;
-  text-shadow: .5px .5px black;
+  text-shadow: 1px 1px black;
 }
 .wrapperTableNames li:hover {
   background-color: #A1C6EA;
@@ -104,6 +104,9 @@ footer {
 .wrapperTableValues tr:nth-child(even) {
   background: #BBD1EA;
 }
+.wrapperInsertRow:hover {
+  background-color: #507DBC;
+}
 .wrapperTableValues table {
   border-radius: 5px;
   font-size: 16px;
@@ -117,30 +120,35 @@ footer {
 }
 
 /* Button */
-.btnWrapper {
+.btnWrapper, .update {
   background-color: rgb(255, 255, 255);
   border-radius: 0.2rem;
   border: none;
   width: 90%;
   transition: all 0.9s ease;
 }
-.btnWrapper:hover {
+.btnWrapper:hover, .update:hover {
   color: #507DBC;
   background-color: #BBD1EA;
 }
-/* Delete button */
+/* Update buttons */
+.update {
+  width: auto;
+  margin-left: 1rem;
+}
+
 
 /* Search input and column Select */
 
 @keyframes gradient {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   50% {
     background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
 }
 /* width */

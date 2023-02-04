@@ -1,23 +1,14 @@
-import {displayTable} from "./displayTable.js";
+import {displayTable} from "../table/displayTable.js";
 
 async function liClicked () {
         const divTables = document.querySelectorAll('#tables li');
         divTables.forEach(li => {
-            li.addEventListener('click',() => {
+            li.addEventListener('click',async () => {
                 const tableName = li.innerText;
-                // clearing inputs for insert,delete etc.
-                (async () => {
-                    const result = await window.api.sendTable(tableName);
-                    let tableRows = result.rows;
-                    let tableColumns = result.metaData.map(obj => obj.name);
-                    addSearchOptions(tableColumns)
-                    displayTable(tableName, tableColumns, tableRows);
-                })()
+                await resetTable(tableName)
             });
         });
 }
-
-export {liClicked};
 
 function addSearchOptions(tableColumns) {
     const selectSearchColumn = document.querySelector('#selectSearchInput');
@@ -30,3 +21,14 @@ function addSearchOptions(tableColumns) {
         selectSearchColumn.appendChild(option);
     }
 }
+
+async function resetTable(tableName) {
+    // clearing inputs for insert,delete etc.
+    const result = await window.api.sendTable(tableName);
+    let tableRows = result.rows;
+    let tableColumns = result.metaData.map(obj => obj.name);
+    addSearchOptions(tableColumns)
+    displayTable(tableName, tableColumns, tableRows);
+}
+
+export {liClicked, resetTable};

@@ -1,12 +1,12 @@
-import { displayTableNames } from './displayTableNames.js';
-import { liClicked } from './liClicked.js';
-import { searchForWord } from './searchForWord.js';
+import { displayTableNames } from './table names/displayTableNames.js';
+import { liClicked } from './table names/liClicked.js';
+import { searchForWord } from './search/searchForWord.js';
 
 // Tables on left
 const data = await window.api.sendTableNames();
 
 async function work() {
-    if(!data.isDefault) {
+    if(data) {
         await displayTableNames(data);
         await liClicked();
         searchForWord();

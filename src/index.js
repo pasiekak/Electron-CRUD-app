@@ -65,18 +65,26 @@ ipcMain.handle('table', async (event, args) => {
   return tableRows;
 });
 ipcMain.handle('search', async (event, args) => {
-  let searchResult = dbMG.getSearchResult(args);
+  let searchResult = await dbMG.getSearchResult(args);
   return searchResult;
 })
 ipcMain.handle('tableColumns', async (event, args) => {
-  let tableColumns = dbMG.getTableColumns(args);
+  let tableColumns = await dbMG.getTableColumns(args);
   return tableColumns;
 })
 ipcMain.handle('update', async (event, args) => {
-  let message = dbMG.updateValue(args);
+  let message = await dbMG.updateValue(args);
   return message;
 })
 ipcMain.handle('columnType', async (event, args) => {
-  let columnType = dbMG.sendColumnType(args);
+  let columnType = await dbMG.getColumnType(args);
   return columnType;
+})
+ipcMain.handle('null', async (event, args) => {
+  let nullableColumns = await dbMG.getNullableColumns(args);
+  return nullableColumns;
+})
+ipcMain.handle('insert', async (event, args) => {
+  let message = await dbMG.insertValues(args);
+  return message;
 })

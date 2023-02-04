@@ -3,7 +3,7 @@ async function updateEvent(table) {
     let tableName = table.querySelector('caption').innerText;
     let columns = table.querySelectorAll('th'); // [n].innerText to get value of specific column
     let singleRows = table.querySelectorAll('tbody tr');
-    for (let i = 0; i < singleRows.length; i++) { // Loop in rows
+    for (let i = 0; i < singleRows.length-1; i++) { // Loop in rows
         let rowValues = singleRows[i].querySelectorAll('td');
         for (let j = 0; j < rowValues.length; j++) { // Loop in values of rows
             let singleValueTd = rowValues[j]; // td node
@@ -14,7 +14,9 @@ async function updateEvent(table) {
             let nullButton = document.createElement('button');
             hideElements(input, button, nullButton);
             input.setAttribute('placeholder','Podaj nową wartość');
-            nullButton.setAttribute('class', 'deleteBtn');
+            nullButton.setAttribute('class', 'update');
+            button.setAttribute('class', 'update');
+            input.setAttribute('class', 'update');
             singleValueTd.appendChild(input);
             singleValueTd.appendChild(nullButton);
             singleValueTd.appendChild(button);
@@ -65,7 +67,6 @@ async function updateEvent(table) {
         }
     }
 }
-export { updateEvent }
 
 function setAppropriateInputType (input, type) {
     if (type === 'DATE') { input.setAttribute('type','date') }
@@ -77,3 +78,5 @@ function hideElements (input, nullButton, button) {
     button.setAttribute('hidden','hidden')
     nullButton.setAttribute('hidden','hidden')
 }
+
+export { updateEvent, setAppropriateInputType }

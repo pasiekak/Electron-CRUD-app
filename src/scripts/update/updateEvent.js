@@ -1,3 +1,4 @@
+import {resetTable} from "../table names/liClicked.js";
 
 async function updateEvent(table) {
     let tableName = table.querySelector('caption').innerText;
@@ -7,25 +8,24 @@ async function updateEvent(table) {
         let rowValues = singleRows[i].querySelectorAll('td');
         for (let j = 0; j < rowValues.length; j++) { // Loop in values of rows
             let singleValueTd = rowValues[j]; // td node
-            let singleValueSpan = singleValueTd.firstChild // span node
+            let singleValueSpan = singleValueTd.querySelector('span'); // span node
 
             let input = document.createElement('input');
             let button = document.createElement('button');
             let nullButton = document.createElement('button');
             hideElements(input, button, nullButton);
             input.setAttribute('placeholder','Podaj nową wartość');
-            nullButton.setAttribute('class', 'update');
+            nullButton.setAttribute('class', 'null');
             button.setAttribute('class', 'update');
             input.setAttribute('class', 'update');
             singleValueTd.appendChild(input);
             singleValueTd.appendChild(nullButton);
             singleValueTd.appendChild(button);
-
             let updateData = {
                 tableName : tableName,
                 columnName : columns[j].innerText,
                 idColumnName : columns[0].innerText,
-                idValue : rowValues[0].innerText,
+                idValue : rowValues[0].querySelector('span').innerText,
                 oldValue : singleValueSpan.innerText,
                 newValue : undefined,
             }
@@ -35,8 +35,8 @@ async function updateEvent(table) {
                     let type = await window.api.sendColumnType({tableName, columnName : updateData.columnName})
                     setAppropriateInputType(input, type);
 
-                    button.innerText = 'Update';
-                    nullButton.innerText = 'Set null'
+                    button.innerText = 'Zaaktualizuj';
+                    nullButton.innerText = 'Ustaw null';
                     input.removeAttribute('hidden');
                     nullButton.removeAttribute('hidden');
                     button.removeAttribute('hidden');
@@ -48,9 +48,11 @@ async function updateEvent(table) {
                 if (input.value !== '') {
                     updateData.newValue = input.value;
                     window.api.updateValue(updateData).then(result => {
-                        if (result.rowsAffected.length !== 0) {
-                            singleValueSpan.innerText = updateData.newValue;
+                        if (result.rowsAffected) {
                             hideElements(input, nullButton, button)
+                            resetTable(tableName);
+                        } else {
+                            console.log(result)
                         }
                     });
                 }
@@ -58,9 +60,12 @@ async function updateEvent(table) {
             nullButton.addEventListener('click', () => {
                 updateData.newValue = null;
                 window.api.updateValue(updateData).then(result => {
-                    if (result.rowsAffected.length !== 0) {
+                    if (result.rowsAffected) {
                         singleValueSpan.innerText = 'null';
                         hideElements(input, nullButton, button)
+                        resetTable(tableName);
+                    } else {
+                        console.log(result)
                     }
                 });
             })

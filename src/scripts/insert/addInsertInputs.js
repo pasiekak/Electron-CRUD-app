@@ -1,7 +1,7 @@
 import {setAppropriateInputType} from "../update/updateEvent.js";
 import {resetTable} from "../table names/liClicked.js";
 
-function addInsertInputs(numberOfInputs, table) {
+function addInsertInputs(table) {
     let rowOfInputs = document.createElement('tr');
     let columns = table.querySelectorAll('th');
     let tableName = table.querySelector('caption').innerText;
@@ -14,7 +14,7 @@ function addInsertInputs(numberOfInputs, table) {
         rowOfInputs.appendChild(td);
     }
     let button = document.createElement('button');
-    button.innerText = 'Insert';
+    button.innerText = 'Dodaj wiersz';
 
     rowOfInputs.setAttribute('class','wrapperInsertRow');
     rowOfInputs.lastChild.appendChild(button);

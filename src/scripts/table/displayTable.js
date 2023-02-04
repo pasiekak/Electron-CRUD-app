@@ -1,5 +1,6 @@
 import {updateEvent} from "../update/updateEvent.js";
 import {addInsertInputs} from "../insert/addInsertInputs.js";
+import {addDeleteButtons} from "../delete/addDeleteButtons.js";
 
 function displayTable(tableName, tableColumns, tableRows) {
     const queryResult = document.querySelector('#queryResult');
@@ -19,7 +20,7 @@ function makeTableAsArray(tableColumns, tableRows) {
         tableArray.push(row)
         for (let i = 0; i < row.length; i++) {
             if (row[i] instanceof Date) {
-                row[i] = `${row[i].getDate()}.${row[i].getMonth()}.${row[i].getFullYear()}`;
+                row[i] = `${row[i].getDate()}.${row[i].getMonth()+1}.${row[i].getFullYear()}`;
             }
         }
     });
@@ -57,7 +58,8 @@ function makeTableFromArray(tableArray, tableName) {
     table.appendChild(caption);
     table.appendChild(thead);
     table.appendChild(tbody);
-    table = addInsertInputs(numberOfColumns, table);
+    table = addDeleteButtons(table);
+    table = addInsertInputs(table);
     updateEvent(table)
     return table;
 }

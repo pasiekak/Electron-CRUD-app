@@ -10,6 +10,7 @@ const API = {
     sendColumnType: ({tableName, columnName}) => ipcRenderer.invoke('columnType', {tableName, columnName}),
     sendSearchResult: ({searchText, tableName, tableColumn}) => ipcRenderer.invoke('search', {searchText, tableName, tableColumn}),
     sendNullableColumns: (tableName) => ipcRenderer.invoke('null',tableName),
+    deleteRow: ({tableName, idColumnName, idColumnValue}) => ipcRenderer.invoke('delete',{tableName, idColumnName, idColumnValue}),
     insertValues: ({tableName, values}) => ipcRenderer.invoke('insert', {tableName, values}),
     updateValue: ({tableName, columnName, idColumnName, idValue, oldValue, newValue}) => ipcRenderer.invoke('update',{tableName, columnName, idColumnName, idValue, oldValue, newValue}),
 }

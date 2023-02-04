@@ -28,7 +28,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -86,5 +86,9 @@ ipcMain.handle('null', async (event, args) => {
 })
 ipcMain.handle('insert', async (event, args) => {
   let message = await dbMG.insertValues(args);
+  return message;
+})
+ipcMain.handle('delete', async (event, args) => {
+  let message = await dbMG.deleteRow(args);
   return message;
 })

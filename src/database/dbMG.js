@@ -124,27 +124,36 @@ async function updateValue ({tableName, columnName, idColumnName, idValue, oldVa
     oracledb.autoCommit = true;
     let connection, result;
     try {
+        console.log({tableName, columnName, idColumnName, idValue, oldValue, newValue})
         console.log('start updateValue')
         connection = await oracledb.getConnection(loginData);
         let sql;
         let columnType = await getColumnType({tableName, columnName});
-        let idColumnType = await getColumnType({tableName, columnName: idColumnName});
 
         if (columnType === 'NUMBER') { newValue = Number(newValue) }
-        else if (columnType === 'DATE') {
+        else if (moment(newValue, 'YYYY-MM-DD', true).isValid() && oldValue !== 'null') {
             let parts = newValue.split('-');
-            newValue = new Date(parts[0], parts[1], parts[2]);
+            newValue = new Date(Number(parts[0]), Number(parts[1])-1, Number(parts[2]));
+            parts = oldValue.split('.');
+            oldValue = new Date(Number(parts[2]), Number(parts[1])-1, Number(parts[0]));
+        } else if (moment(newValue, 'YYYY-MM-DD', true).isValid() && oldValue === 'null') {
+            let parts = newValue.split('-');
+            newValue = new Date(Number(parts[0]), Number(parts[1])-1, Number(parts[2]));
+        } else if (newValue === null) {
+            let parts = oldValue.split('.');
+            oldValue = new Date(Number(parts[2]), Number(parts[1])-1, Number(parts[0]));
         }
-        sql = `UPDATE ${tableName} SET ${columnName} = :newVal WHERE ${idColumnName} LIKE :idVal`;
+        sql = `UPDATE ${tableName} SET ${columnName} = :newVal WHERE ${idColumnName} = :idVal AND ${columnName} = :oldVal`;
 
-        if (idColumnType === 'NUMBER') {
-            idValue = Number(idValue)
-            sql = sql.slice(0, sql.lastIndexOf(" WHERE "));
-            sql += ` WHERE ${idColumnName} = :idVal`;
-        };
         let binds = {
             newVal : newValue,
             idVal : idValue,
+        }
+        if (oldValue === 'null') {
+            sql = sql.slice(0,sql.lastIndexOf('='));
+            sql += `IS NULL`;
+        } else {
+            binds.oldVal = oldValue;
         }
         result = await connection.execute(sql, binds);
     } catch (err) {
@@ -193,6 +202,31 @@ async function insertValues({tableName, values}) {
     }
 }
 
+async function deleteRow({tableName, idColumnName, idColumnValue}) {
+    let connection, result;
+    oracledb.autoCommit = true;
+    try {
+        connection = await oracledb.getConnection(loginData);
+        let sql = `DELETE FROM ${tableName} WHERE ${idColumnName} = :idBind`;
+        let id = idColumnValue
+        if (!isNaN(id) && !isNaN(parseFloat(id))) {
+            id = Number(id);
+        }
+        result = await connection.execute(sql, { idBind: id})
+    } catch (err) {
+        result = err;
+        return err
+    } finally {
+        if (connection) {
+            await connection.close();
+            oracledb.autoCommit = false;
+            console.log('end deleteRow')
+            return result
+        }
+    }
+}
+
+exports.deleteRow = deleteRow;
 exports.getNullableColumns = getNullableColumns;
 exports.getColumnType = getColumnType;
 exports.getTableColumns = getTableColumns;

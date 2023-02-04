@@ -18,8 +18,19 @@ function searchForWord() {
 export { searchForWord };
 
 function deleteDuplicatesThenDisplay(searchResult) {
-    let finalResult;
-    finalResult = [...new Set(searchResult.map(JSON.stringify))].map(JSON.parse);
+    let finalResult = [];
+    for (let item of searchResult) {
+        let isUnique = true;
+        for (let uniqueItem of finalResult) {
+            if (JSON.stringify(item) === JSON.stringify(uniqueItem)) {
+                isUnique = false;
+                break;
+            }
+        }
+        if (isUnique) {
+            finalResult.push(item);
+        }
+    }
     return finalResult;
 }
 async function loadTableColumns(tableName) {

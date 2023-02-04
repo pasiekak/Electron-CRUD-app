@@ -1,9 +1,9 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin: 0;
-  padding: 1px;
-  width: calc(100% - 2px);
-  height: 739px;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
 }
 /* Centering any content */
 #searchMenu, #options, #optionInputs, header, footer {
@@ -56,6 +56,15 @@ footer {
   background-color: #507DBC;
   border-radius: 0 0 10px;
 
+}
+#searchText {
+  border: 0;
+  width: 89%;
+  padding: 0;
+}
+#searchButton, #selectSearchInput {
+  width: 90%;
+  margin-top: 2px;
 }
 /* Table names ul li*/
 .wrapperTableNames ul {
@@ -120,7 +129,7 @@ footer {
 }
 
 /* Button */
-.btnWrapper, .update {
+.btnWrapper, .update, .null, .delete {
   background-color: rgb(255, 255, 255);
   border-radius: 0.2rem;
   border: none;
@@ -132,9 +141,15 @@ footer {
   background-color: #BBD1EA;
 }
 /* Update buttons */
-.update {
+.update, .null, .delete {
   width: auto;
   margin-left: 1rem;
+}
+.null:hover, .delete:hover {
+  background: crimson;
+}
+.delete {
+  float: left;
 }
 
 

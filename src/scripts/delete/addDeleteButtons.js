@@ -9,17 +9,15 @@ function addDeleteButtons (table) {
         deleteButton.innerText = 'Usuń wiersz';
 
         deleteButton.addEventListener('click', async () => {
-            let isExecuted = confirm('Na pewno chcesz usunąć ten wiersz?');
-            if (isExecuted) {
                 let deleteData = {
                     tableName: table.querySelector('caption').innerText,
                     idColumnName: table.querySelector('thead th').innerText,
                     idColumnValue: firstTD.querySelector('span').innerText,
                 }
-                let result = window.api.deleteRow(deleteData);
+                let result = await window.api.deleteRow(deleteData);
+                console.log(result)
                 if (result) {
                     await resetTable(deleteData.tableName);
-                }
             }
         })
         firstTD.insertBefore(deleteButton, firstTD.firstChild)

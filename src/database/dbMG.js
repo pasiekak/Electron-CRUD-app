@@ -2,9 +2,9 @@ const oracledb = require("oracledb");
 const moment = require("moment");
 const path = require('path');
 const loginData = {
-    user : "ziibd37",
-    password : "haslo2022",
-    connectString : "155.158.112.45:1521/oltpstud",
+    user : "***",
+    password : "***",
+    connectString : "ip:port/sid",
 };
 async function setEnv () {
     let p;

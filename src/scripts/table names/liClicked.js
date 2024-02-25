@@ -1,10 +1,10 @@
 import {displayTable} from "../table/displayTable.js";
 
 async function liClicked () {
-        const divTables = document.querySelectorAll('#tables li');
-        divTables.forEach(li => {
-            li.addEventListener('click',async () => {
-                const tableName = li.innerText;
+        const divTables = document.querySelectorAll('#tables div');
+        divTables.forEach(div => {
+            div.addEventListener('click',async () => {
+                const tableName = div.innerText;
                 await resetTable(tableName)
             });
         });
@@ -26,7 +26,7 @@ async function resetTable(tableName) {
     // clearing inputs for insert,delete etc.
     const result = await window.api.sendTable(tableName);
     let tableRows = result.rows;
-    let tableColumns = result.metaData.map(obj => obj.name);
+    let tableColumns = result.columns;
     addSearchOptions(tableColumns)
     displayTable(tableName, tableColumns, tableRows);
 }

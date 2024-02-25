@@ -1,13 +1,18 @@
-async function displayTableNames (tableNames) {
-    const divTable = document.querySelector('#tables');
-    let rows = tableNames;
-    let ul = document.createElement('ul');
-    rows.forEach(row => {
-        let li = document.createElement('li');
-        li.innerText = row;
-        ul.appendChild(li);
-    });
-    divTable.appendChild(ul);
+async function displayTableNames(tableNames) {
+  const divTable = document.querySelector("#tables");
+  let rows = tableNames;
+  rows.forEach((row) => {
+    let div = document.createElement("div");
+    // Table icon
+    let divIMG = document.createElement("div");
+    divIMG.setAttribute("class", "table-name-image");
+    div.appendChild(divIMG);
+    // Table name
+    let span = document.createElement("span");
+    span.innerText = row;
+    div.appendChild(span);
+    divTable.appendChild(div);
+  });
 }
 
-export {displayTableNames};
+export { displayTableNames };

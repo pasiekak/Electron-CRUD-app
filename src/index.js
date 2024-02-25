@@ -87,7 +87,3 @@ ipcMain.handle('delete', async (event, args) => {
   let message = await dbMG.deleteRow(args);
   return message;
 })
-ipcMain.handle('env', async(event, args) => {
-  let message = await dbMG.setEnv();
-  return message;
-})

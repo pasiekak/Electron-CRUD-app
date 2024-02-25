@@ -11,6 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 0.5rem;
 }
 /* Positioning biggest divs */
 header {
@@ -39,6 +40,9 @@ footer {
   float: left;
   background-color: #BBD1EA;
   overflow: auto;
+
+  display: flex;
+  flex-direction: column;
 }
 #queryResult {
   height: 100%;
@@ -48,11 +52,11 @@ footer {
 }
 /* Style and positioning inside interactive div */
 #searchMenu {
-  height: 10%;
+  padding-block: 0.5rem;
   background-color: #507DBC;
 }
 #tables {
-  height: 90%;
+  flex: 1;
   background-color: #507DBC;
   border-radius: 0 0 10px;
 
@@ -67,23 +71,27 @@ footer {
   margin-top: 2px;
 }
 /* Table names ul li*/
-.wrapperTableNames ul {
-  margin: 0;
-  height: 100%;
+.wrapperTableNames {
   display: flex;
   flex-direction: column;
-  padding-left: 0;
-  padding-right: 5px;
+  gap: 0.3rem;
 }
-.wrapperTableNames li {
-  background: url(pictures/cells512.png) right no-repeat;
-  background-size: contain;
-  flex-grow: 1;
+.wrapperTableNames > div {
+  height: 2rem;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-inline: 0.5rem;
   align-items: center;
-  text-shadow: 1px 1px black;
+  cursor: pointer;
 }
-.wrapperTableNames li:hover {
+.wrapperTableNames > div .table-name-image  {
+  background-image: url("pictures//cells512.png");
+  height: 100%;
+  aspect-ratio: 1/1;
+  background-size: contain;
+} 
+.wrapperTableNames > div:hover {
   background-color: #A1C6EA;
 }
 
@@ -100,6 +108,9 @@ footer {
 }
 .wrapperTableValues td:hover {
   background-color: #507DBC;
+}
+.wrapperTableValues td span {
+  cursor: pointer;
 }
 .wrapperTableValues caption {
   background-color: #507DBC;

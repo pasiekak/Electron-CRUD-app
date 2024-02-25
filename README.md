@@ -1,8 +1,8 @@
 # Description
-Application to perform CRUD operations on oracleDB done with electron and node.
+Application designed to perform CRUD operations on MySQL databases.
 
 # Instruction to run
-- Copy repository
-- run "npm i" command inside copied folder
-- if you have working oracle database online, change credentials in dbMG.js
-- start with npm start
+- Copy repository.
+- Run "npm i" command inside copied folder.
+- Change credentials in dbMG.js if you have working MySQL database.
+- start with npm start.
